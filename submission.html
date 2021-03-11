@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<!-- cse6242 s21 -->
+
+<!-- run: http-server & -->
+
+<head>
+  <style>
+    <!-- define CSS rules -->
+  </style>
+</head>
+
+<body>
+
+  <script src="lib/d3/d3.min.js"></script>
+  <script src="lib/d3-dsv/d3-dsv.min.js"></script>
+  <script src="lib/d3-fetch/d3-fetch.min.js"></script>
+
+
+  <script>
+    // define the dimensions and margins for the graph
+   var w = 500;
+   var h = 100;   
+
+    // define function to parse time in years format
+	 function parseYear(t){
+      return d3.timeParse("%Y")
+    } 
+
+    // create scales x & y for X and Y axis and set their ranges
+    // xScale = d3.scaleLinear()
+    //               .domain([d3.min(data), d3.max(data)])
+    //               .range([0, w- 100]);
+
+    // var xAxis = d3.axisBottom(xScale);
+
+
+    // append svg element to the body of the page
+    // set dimensions and position of the svg element
+    var svg = d3.select("body").append("svg").attr("width", w).attr("height", h); 
+
+
+    // Get the data
+	  var pathToCsv = "q3.csv";		// path to csv
+	
+    d3.dsv(",", pathToCsv, function (d) {
+      return {
+        year : parseYear(d.year),
+        running_total : +d.running_total
+        // format data attributes if required
+      }
+    }).then(function (data) {
+      console.log(data); // you should see the data in your browser's developer tools console 
+      
+      /* Create bar plot using data from csv */
+
+    //   // set the domains of X and Y scales based on data
+    //   x.domain();
+    //   y.domain();
+
+    //   // Add bars to svg - create new elements based on your data
+      svg.selectAll("rect").data(data).enter().append("rect")
+      .attr("y", data[1] )
+      .attr ("x",20)
+
+    //   // Add the X Axis
+      // svg.append("g")
+      //   .call(xAxis);
+
+    //   // Add the text label for X Axis
+    //   svg.append()
+
+    //   // Add the Y Axis
+    //   svg.append()
+
+    //   // Add the text label for Y axis
+    //   svg.append()
+
+
+    // }).catch(function (error) {
+    //   console.log(error);
+    });
+
+
+  </script>
+
+</body>
